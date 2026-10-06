@@ -19,8 +19,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import logo from "@/assets/logo-salas-am.jpg";
+import { readCart } from "@/lib/cart";
+import { useEffect, useState } from "react";
 
 const links = [
+  { href: "/rifas", label: "Rifas" },
   { href: "/#mision", label: "Misión" },
   { href: "/#galeria", label: "Galería" },
   { href: "/#actividades", label: "Actividades" },
@@ -29,6 +32,19 @@ const links = [
 ]
 
 export function SiteHeader() {
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    const sync = () => setCount(readCart()?.numbers.length ?? 0)
+    sync()
+    window.addEventListener("salas-cart", sync)
+    window.addEventListener("storage", sync)
+    return () => {
+      window.removeEventListener("salas-cart", sync)
+      window.removeEventListener("storage", sync)
+    }
+  }, [])
+
   return (
     <header className="sticky top-0 z-40 border-b border-[#d7e6f2] bg-white/95 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-2 px-4 sm:h-[4.5rem] sm:px-6">
@@ -62,6 +78,13 @@ export function SiteHeader() {
           </NavigationMenuList>
         </NavigationMenu>
         <div className="flex shrink-0 items-center gap-2">
+          <Button
+            asChild
+            variant="outline"
+            className="h-11 rounded-full border-[#d7e6f2] px-3.5"
+          >
+            <a href="/rifas/carrito">Carrito{count ? ` (${count})` : ""}</a>
+          </Button>
           <Button
             asChild
             className="h-11 rounded-full bg-[#c47a2c] px-3.5 font-semibold text-white hover:bg-[#b36b22] sm:px-5"

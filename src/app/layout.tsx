@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Lora } from "next/font/google";
-import { SiteFooter } from "@/components/landing/site-footer";
-import { SiteHeader } from "@/components/landing/site-header";
-import { WhatsappFab } from "@/components/landing/whatsapp-fab";
+import { SiteChrome } from "@/components/site-chrome";
 import "./globals.css";
 
 const geist = Geist({
@@ -30,12 +28,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body
         suppressHydrationWarning
-        className={`${geist.className} flex min-h-full flex-col overflow-x-hidden bg-[#f4f8fb] text-[#14233a] selection:bg-[#3b9fd0]/25 selection:text-[#14233a]`}
+        className={`${geist.className} flex min-h-full flex-col overflow-x-hidden text-[#14233a] selection:bg-[#3b9fd0]/25 selection:text-[#14233a]`}
       >
-        <SiteHeader />
-        {children}
-        <SiteFooter />
-        <WhatsappFab />
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   );

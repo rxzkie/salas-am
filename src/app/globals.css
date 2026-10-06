@@ -1,3 +1,27 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+
+body {
+  background-color: #f4f8fb;
+  background-image:
+    radial-gradient(ellipse 90% 55% at -8% -12%, rgba(59, 159, 208, 0.32), transparent 58%),
+    radial-gradient(ellipse 70% 48% at 110% -6%, rgba(196, 122, 44, 0.22), transparent 54%),
+    radial-gradient(ellipse 60% 42% at 72% 108%, rgba(142, 196, 228, 0.38), transparent 52%),
+    linear-gradient(180deg, #f8fbfe 0%, #eef5fb 46%, #fbf6f0 100%);
+}
+
+@media (min-width: 1024px) {
+  body {
+    background-attachment: fixed;
+  }
+}
+
+@keyframes hero-rise {
+  from {
+    transform: translateY(16px);
+  }
+  to {
+    transform: none;
+  }
+}
