@@ -1,41 +1,41 @@
-"use client";
+"use client"
 
-import Image from "next/image";
-import { motion } from "framer-motion";
-import { CalendarHeart, Lightbulb, Palette, Sparkles } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import foto1 from "@/assets/galeria/actividad-1.jpg";
-import foto2 from "@/assets/galeria/actividad-2.jpg";
-import foto4 from "@/assets/galeria/actividad-4.jpg";
-import foto5 from "@/assets/galeria/actividad-5.jpg";
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { CalendarHeart, Lightbulb, Palette, Sparkles } from "lucide-react"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import capacitacion from "@/assets/galeria/capacitacion.jpg"
+import grupo from "@/assets/galeria/grupo.jpg"
+import once from "@/assets/galeria/once.jpg"
+import reunion from "@/assets/galeria/reunion.jpg"
 
 const items = [
   {
     icon: Palette,
     title: "Talleres y manualidades",
     text: "Espacios creativos para compartir, estimular memoria y fortalecer la autoestima en comunidad.",
-    image: foto1,
+    image: capacitacion,
   },
   {
     icon: CalendarHeart,
     title: "Actividades de encuentro",
     text: "Jornadas, celebraciones y momentos de compañía para el adulto mayor y sus familias.",
-    image: foto2,
+    image: grupo,
   },
   {
     icon: Lightbulb,
     title: "Orientación y apoyo",
     text: "Información clara y acompañamiento psicosocial para resolver dudas y abrir caminos de ayuda.",
-    image: foto4,
+    image: once,
   },
   {
     icon: Sparkles,
     title: "Presente en Ñuble",
     text: "Acción local en Chillán, con mirada social y compromiso permanente con la tercera edad.",
-    image: foto5,
+    image: reunion,
   },
-];
+]
 
 export function Actividades() {
   return (
@@ -61,7 +61,13 @@ export function Actividades() {
             >
               <Card className="overflow-hidden rounded-3xl border-0 bg-white/10 text-white shadow-none ring-1 ring-white/15">
                 <div className="relative h-44 w-full sm:h-52">
-                  <Image src={item.image} alt={item.title} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover" />
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    fill
+                    sizes="(min-width: 640px) 50vw, 100vw"
+                    className="object-cover"
+                  />
                 </div>
                 <CardHeader>
                   <span className="flex size-12 items-center justify-center rounded-2xl bg-[#c47a2c] text-white">
@@ -72,7 +78,9 @@ export function Actividades() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="text-base leading-relaxed text-white/75">{item.text}</CardDescription>
+                  <CardDescription className="text-base leading-relaxed text-white/75">
+                    {item.text}
+                  </CardDescription>
                 </CardContent>
               </Card>
             </motion.div>
@@ -80,5 +88,5 @@ export function Actividades() {
         </div>
       </div>
     </section>
-  );
+  )
 }
