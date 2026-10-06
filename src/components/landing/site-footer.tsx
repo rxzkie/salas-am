@@ -4,6 +4,7 @@ import logo from "@/assets/logo-salas-am.jpg";
 
 const links = [
   { href: "/#mision", label: "Misión" },
+  { href: "/#galeria", label: "Galería" },
   { href: "/#actividades", label: "Actividades" },
   { href: "/#nosotros", label: "Nosotros" },
   { href: "/#contacto", label: "Contacto" },
