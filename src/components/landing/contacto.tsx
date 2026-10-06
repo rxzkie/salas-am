@@ -38,7 +38,7 @@ export function Contacto() {
           <MapPin className="mt-1 size-4 shrink-0 text-[#3b9fd0]" />
           Sargeto Aldea 562, Chillán · Región de Ñuble
         </p>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {channels.map((channel) => (
             <Card key={channel.title} className="rounded-3xl border-0 bg-white shadow-none ring-1 ring-[#d7e6f2]">
               <CardHeader>

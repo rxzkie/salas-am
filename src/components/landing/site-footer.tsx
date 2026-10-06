@@ -23,10 +23,10 @@ export function SiteFooter() {
               className="size-14 shrink-0 rounded-full object-cover"
             />
             <div className="min-w-0">
-              <p className="font-[family-name:var(--font-lora)] text-xl leading-tight font-semibold text-[#c47a2c] sm:text-2xl">
+              <p className="font-[family-name:var(--font-lora)] text-lg leading-tight font-semibold text-balance text-[#c47a2c] sm:text-2xl">
                 Corporación Salas AM
               </p>
-              <p className="mt-1 text-sm text-[#5a6d86]">Apoyo psicosocial al adulto mayor · Ñuble</p>
+              <p className="mt-1 text-sm text-pretty text-[#5a6d86]">Apoyo psicosocial al adulto mayor · Ñuble</p>
             </div>
           </div>
           <nav className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-end">

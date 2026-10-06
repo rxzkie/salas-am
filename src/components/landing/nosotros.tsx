@@ -34,9 +34,9 @@ export function Nosotros() {
           <Separator className="my-5 bg-[#d7e6f2]" />
           <dl className="grid gap-4">
             {facts.map((fact) => (
-              <div key={fact.label} className="grid gap-1 sm:grid-cols-[8.5rem_1fr] sm:gap-4">
+              <div key={fact.label} className="grid gap-1 min-[480px]:grid-cols-[8.5rem_1fr] min-[480px]:gap-4">
                 <dt className="text-sm font-semibold tracking-wide text-[#3b9fd0] uppercase">{fact.label}</dt>
-                <dd className="text-base leading-snug text-[#14233a]">{fact.value}</dd>
+                <dd className="text-base leading-snug break-words text-[#14233a]">{fact.value}</dd>
               </div>
             ))}
           </dl>

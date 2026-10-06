@@ -30,9 +30,9 @@ export function Mision() {
         <p className="mt-4 max-w-2xl text-base leading-relaxed text-pretty text-[#5a6d86] sm:text-lg">
           Somos la Corporación para el Apoyo Psicosocial del Adulto Mayor Salas. Trabajamos para que ninguna persona mayor se sienta sola: promovemos bienestar, participación y vínculos reales.
         </p>
-        <div className="mt-10 grid gap-4 md:grid-cols-3">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
           {pillars.map((pillar) => (
-            <Card key={pillar.title} className="rounded-3xl border-0 bg-white shadow-none ring-1 ring-[#d7e6f2]">
+            <Card key={pillar.title} className="h-full rounded-3xl border-0 bg-white shadow-none ring-1 ring-[#d7e6f2]">
               <CardHeader>
                 <span className="flex size-12 items-center justify-center rounded-2xl bg-[#e8f4fb] text-[#3b9fd0]">
                   <pillar.icon className="size-5" />

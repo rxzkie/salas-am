@@ -13,8 +13,11 @@ export function Cierre() {
             </h2>
           </div>
           <div className="flex w-full flex-col gap-3 sm:w-auto sm:min-w-56">
-            <Button asChild className="h-12 rounded-full bg-white px-6 text-base font-semibold text-[#c47a2c] hover:bg-white/90">
-              <a href="tel:+56930055007">Llamar al +56 9 3005 5007</a>
+            <Button asChild className="h-12 rounded-full bg-white px-4 text-sm font-semibold text-[#c47a2c] hover:bg-white/90 sm:px-6 sm:text-base">
+              <a href="tel:+56930055007">
+                <span className="sm:hidden">Llamar ahora</span>
+                <span className="hidden sm:inline">Llamar al +56 9 3005 5007</span>
+              </a>
             </Button>
             <Button
               asChild
