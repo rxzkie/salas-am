@@ -76,13 +76,6 @@ export function Hero() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="h-11 rounded-full border-[#c47a2c]/40 bg-white px-6 text-[#c47a2c] hover:bg-[#c47a2c]/5"
-            >
-              <a href="#galeria">Ver galería</a>
-            </Button>
           </div>
         </motion.div>
 
