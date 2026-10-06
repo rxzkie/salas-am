@@ -45,6 +45,9 @@ export function SiteFooter() {
         <Separator className="bg-[#d7e6f2]" />
         <div className="flex flex-col gap-2 text-sm text-[#5a6d86] sm:flex-row sm:items-center sm:justify-between">
           <p>RUT 65.201.627-8 · Chillán, Región de Ñuble</p>
+          <a href="mailto:adm.salasam@gmail.com" className="font-medium text-[#3b9fd0]">
+            adm.salasam@gmail.com
+          </a>
           <p className="font-[family-name:var(--font-lora)] text-base font-semibold text-[#c47a2c]">
             @corp.salasam
           </p>

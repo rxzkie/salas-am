@@ -1,4 +1,4 @@
-import { AtSign, MapPin, Phone, Share2 } from "lucide-react";
+import { AtSign, Mail, MapPin, Phone, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -9,6 +9,20 @@ const channels = [
     text: "+56 9 3005 5007",
     href: "tel:+56930055007",
     cta: "Llamar ahora",
+  },
+  {
+    icon: Phone,
+    title: "WhatsApp",
+    text: "+56 9 4198 5077",
+    href: "https://wa.me/56941985077",
+    cta: "Escribir ahora",
+  },
+  {
+    icon: Mail,
+    title: "Correo",
+    text: "adm.salasam@gmail.com",
+    href: "mailto:adm.salasam@gmail.com",
+    cta: "Enviar correo",
   },
   {
     icon: AtSign,

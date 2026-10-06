@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Lora } from "next/font/google";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
+import { WhatsappFab } from "@/components/landing/whatsapp-fab";
 import "./globals.css";
 
 const geist = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <SiteHeader />
         {children}
         <SiteFooter />
+        <WhatsappFab />
       </body>
     </html>
   );
