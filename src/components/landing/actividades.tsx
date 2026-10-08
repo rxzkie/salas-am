@@ -5,35 +5,32 @@ import { motion } from "framer-motion"
 import { CalendarHeart, Lightbulb, Palette, Sparkles } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import capacitacion from "@/assets/galeria/capacitacion.jpg"
-import grupo from "@/assets/galeria/grupo.jpg"
-import once from "@/assets/galeria/once.jpg"
-import reunion from "@/assets/galeria/reunion.jpg"
+import { activityPhotos } from "@/lib/media"
 
 const items = [
   {
     icon: Palette,
     title: "Talleres y manualidades",
     text: "Espacios creativos para compartir, estimular memoria y fortalecer la autoestima en comunidad.",
-    image: capacitacion,
+    image: activityPhotos.talleres,
   },
   {
     icon: CalendarHeart,
     title: "Actividades de encuentro",
     text: "Jornadas, celebraciones y momentos de compañía para el adulto mayor y sus familias.",
-    image: grupo,
+    image: activityPhotos.encuentros,
   },
   {
     icon: Lightbulb,
     title: "Orientación y apoyo",
     text: "Información clara y acompañamiento psicosocial para resolver dudas y abrir caminos de ayuda.",
-    image: once,
+    image: activityPhotos.orientacion,
   },
   {
     icon: Sparkles,
     title: "Presente en Ñuble",
     text: "Acción local en Chillán, con mirada social y compromiso permanente con la tercera edad.",
-    image: reunion,
+    image: activityPhotos.nuble,
   },
 ]
 
@@ -48,7 +45,7 @@ export function Actividades() {
           Lo que hacemos, juntos.
         </h2>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
-          Fotos reales desde Instagram @corp.salasam: talleres, encuentros y acompañamiento en Ñuble.
+          Talleres, encuentros y acompañamiento en Ñuble, con el espíritu de @corp.salasam.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           {items.map((item, index) => (
@@ -60,7 +57,7 @@ export function Actividades() {
               transition={{ delay: index * 0.08, duration: 0.45 }}
             >
               <Card className="overflow-hidden rounded-3xl border-0 bg-white/10 text-white shadow-none ring-1 ring-white/15">
-                <div className="relative h-44 w-full sm:h-52">
+                <div className="relative h-52 w-full sm:h-60">
                   <Image
                     src={item.image}
                     alt={item.title}
