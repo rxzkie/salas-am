@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react"
@@ -59,16 +60,33 @@ export default function RifaPage() {
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-12">
-      <Link href="/rifas" className="text-sm text-[#0039a6]">
-        Rifas activas
-      </Link>
-      <h1 className="mt-2 font-[family-name:var(--font-lora)] text-3xl text-[#14233a] sm:text-4xl">
-        {board.title}
-      </h1>
-      <p className="mt-2 text-sm text-[#3d4d6b] sm:text-base">
-        {board.prize} · {money(board.ticketPrice)} · {board.totalTickets - sold.size} disponibles
-      </p>
-      {board.description ? <p className="mt-3 max-w-2xl text-sm leading-relaxed">{board.description}</p> : null}
+      <div className="relative overflow-hidden rounded-[1.75rem] border border-[#d7e6f2] shadow-[0_18px_40px_-28px_rgba(20,35,58,0.55)]">
+        <div className="relative aspect-[16/10] sm:aspect-[21/9]">
+          <Image
+            src="/rifa-default.jpg"
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1152px) 1152px, 100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#14233a] via-[#14233a]/35 to-[#14233a]/10" />
+        </div>
+        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-7">
+          <Link href="/rifas" className="text-sm font-medium text-white/80">
+            Rifas activas
+          </Link>
+          <h1 className="mt-1 font-[family-name:var(--font-lora)] text-3xl text-white sm:text-5xl">
+            {board.title}
+          </h1>
+          <p className="mt-2 max-w-2xl text-sm text-white/85 sm:text-base">
+            {board.prize} · {money(board.ticketPrice)} el número · {board.totalTickets - sold.size} disponibles
+          </p>
+        </div>
+      </div>
+      {board.description ? (
+        <p className="mt-5 max-w-2xl text-sm leading-relaxed text-[#3d4d6b] sm:text-base">{board.description}</p>
+      ) : null}
       {error ? <p className="mt-4 text-sm text-[#d52b1e]">{error}</p> : null}
       <div className="mt-6 grid grid-cols-5 gap-1.5 sm:grid-cols-8 md:grid-cols-10">
         {numbers.map((number) => {

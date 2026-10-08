@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
 import { publicApi } from "@/lib/public-api"
@@ -21,8 +22,12 @@ export function RifaAnuncio() {
 
   return (
     <section className="bg-[#14233a] text-white">
-      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between">
-        <div className="min-w-0">
+      <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6 md:flex-row md:items-center md:justify-between md:py-8">
+        <div className="flex min-w-0 items-center gap-4">
+          <div className="relative hidden size-20 shrink-0 overflow-hidden rounded-2xl sm:block">
+            <Image src="/rifa-default.jpg" alt="" fill sizes="80px" className="object-cover" />
+          </div>
+          <div className="min-w-0">
           <p className="text-xs font-semibold tracking-[0.16em] text-[#c47a2c] uppercase">
             Rifa a la venta
           </p>
@@ -32,6 +37,7 @@ export function RifaAnuncio() {
           <p className="mt-2 text-sm text-white/80 sm:text-base">
             {raffle.prize} · {money(raffle.ticketPrice)} el número · {left} disponibles
           </p>
+          </div>
         </div>
         <Link
           href={`/rifas/${raffle.id}`}
