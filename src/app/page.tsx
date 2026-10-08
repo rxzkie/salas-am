@@ -9,13 +9,13 @@ import { Mision } from "@/components/landing/mision"
 import { Preguntas } from "@/components/landing/preguntas"
 import { Nosotros } from "@/components/landing/nosotros"
 
-import { RifaAnuncio } from "@/components/landing/rifa-anuncio"
+import { RifaAnuncio, RifaAnuncioFallback } from "@/components/landing/rifa-anuncio"
 
 export default function Home() {
   return (
     <main className="flex-1">
       <Hero />
-      <Suspense fallback={null}>
+      <Suspense fallback={<RifaAnuncioFallback />}>
         <RifaAnuncio />
       </Suspense>
       <Marquee />

@@ -128,7 +128,7 @@ export default function CarritoPage() {
       <form onSubmit={pay} className="space-y-3 rounded-[1.5rem] border border-[#d7e6f2] bg-white p-4 shadow-[0_18px_40px_-28px_rgba(20,35,58,0.45)] sm:p-6">
         <h2 className="text-lg font-semibold text-[#14233a]">Pagar</h2>
         <p className="text-sm leading-relaxed text-[#5a6d86]">
-          Tarjeta, débito, transferencia u otro medio. El cobro lo procesa Mercado Pago.
+          Puedes pagar con tarjeta, débito o transferencia. Es simple y seguro: Mercado Pago recibe el pago.
         </p>
         <label className="block text-sm font-medium text-[#14233a]">
           Nombre
@@ -148,7 +148,7 @@ export default function CarritoPage() {
           disabled={loading}
           className="h-12 w-full rounded-full bg-[#009ee3] text-base font-semibold text-white disabled:opacity-60"
         >
-          {loading ? "Redirigiendo" : `Pagar ${money(total)}`}
+          {loading ? "Un momento…" : `Pagar ${money(total)}`}
         </button>
       </form>
     </main>
