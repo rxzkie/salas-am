@@ -45,7 +45,7 @@ export function Actividades() {
           Lo que hacemos, juntos.
         </h2>
         <p className="mt-4 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg">
-          Talleres, encuentros y acompañamiento en Ñuble, con el espíritu de @corp.salasam.
+          Fotos reales desde Instagram @corp.salasam: talleres, encuentros y acompañamiento en Ñuble.
         </p>
         <div className="mt-10 grid gap-4 sm:grid-cols-2">
           {items.map((item, index) => (

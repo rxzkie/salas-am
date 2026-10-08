@@ -27,7 +27,7 @@ export function Galeria() {
             Momentos reales en Ñuble
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#5a6d86] sm:text-base">
-            Actividades, visitas y acompañamiento inspirados en @corp.salasam.
+            Actividades, visitas y acompañamiento desde @corp.salasam.
           </p>
         </div>
 
