@@ -3,10 +3,17 @@ import Link from "next/link"
 import { loadActiveRaffles } from "@/lib/public-data"
 import { money } from "@/lib/raffle"
 
-export const revalidate = 20
+export const revalidate = 15
 
 export default async function RifasPage() {
-  const raffles = await loadActiveRaffles()
+  let raffles: Awaited<ReturnType<typeof loadActiveRaffles>> = []
+  let error = ""
+
+  try {
+    raffles = await loadActiveRaffles()
+  } catch {
+    error = "No pudimos cargar las rifas. Prueba de nuevo en unos segundos."
+  }
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 sm:px-6 sm:py-12">
@@ -17,6 +24,7 @@ export default async function RifasPage() {
       <p className="mt-3 max-w-xl text-sm leading-relaxed text-[#3d4d6b] sm:text-base">
         Elige tus números, revísalos en el carrito y paga con el medio que prefieras.
       </p>
+      {error ? <p className="mt-4 text-sm text-[#d52b1e]">{error}</p> : null}
       <div className="mt-6 grid gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-5">
         {raffles.map((raffle) => {
           const sold = raffle._count?.tickets ?? 0
@@ -67,7 +75,7 @@ export default async function RifasPage() {
           )
         })}
       </div>
-      {raffles.length === 0 ? (
+      {!error && raffles.length === 0 ? (
         <p className="mt-8 text-sm text-[#3d4d6b]">No hay rifas activas por ahora.</p>
       ) : null}
     </main>

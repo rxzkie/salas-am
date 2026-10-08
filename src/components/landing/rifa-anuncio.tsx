@@ -4,8 +4,13 @@ import { loadActiveRaffles } from "@/lib/public-data"
 import { money } from "@/lib/raffle"
 
 export async function RifaAnuncio() {
-  const raffles = await loadActiveRaffles()
-  const raffle = raffles[0]
+  let raffle = null as Awaited<ReturnType<typeof loadActiveRaffles>>[number] | null
+  try {
+    const raffles = await loadActiveRaffles()
+    raffle = raffles[0] ?? null
+  } catch {
+    return null
+  }
   if (!raffle) return null
 
   const sold = raffle._count?.tickets ?? 0

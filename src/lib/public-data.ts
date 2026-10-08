@@ -13,19 +13,19 @@ export type Board = {
   sold: number[]
 }
 
-async function read<T>(path: string): Promise<T | null> {
-  try {
-    const response = await fetch(`${base}${path}`, { next: { revalidate: 20 } })
-    if (!response.ok) return null
-    return (await response.json()) as T
-  } catch {
-    return null
+async function read<T>(path: string): Promise<T> {
+  const response = await fetch(`${base}${path}`, {
+    next: { revalidate: 15 },
+  })
+  if (!response.ok) {
+    throw new Error(`API ${response.status}`)
   }
+  return (await response.json()) as T
 }
 
 export async function loadActiveRaffles() {
   const items = await read<Raffle[]>("/raffles")
-  return (items ?? []).filter((item) => item.status === "ACTIVE")
+  return items.filter((item) => item.status === "ACTIVE")
 }
 
 export async function loadBoard(id: string) {
