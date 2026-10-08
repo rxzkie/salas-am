@@ -37,19 +37,35 @@ export default function RafflesPage() {
   async function onCreate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const form = new FormData(event.currentTarget)
+    const ticketPrice = Number(form.get("ticketPrice"))
+    const totalTickets = Number(form.get("totalTickets"))
+    const drawRaw = String(form.get("drawAt") || "")
+    const drawAt = drawRaw ? new Date(drawRaw) : null
+    if (!Number.isInteger(ticketPrice) || ticketPrice < 1) {
+      setError("El precio debe ser un número entero mayor a 0")
+      return
+    }
+    if (!Number.isInteger(totalTickets) || totalTickets < 1 || totalTickets > 5000) {
+      setError("La cantidad de números debe estar entre 1 y 5000")
+      return
+    }
+    if (drawAt && Number.isNaN(drawAt.getTime())) {
+      setError("La fecha del sorteo no es válida")
+      return
+    }
     setLoading(true)
     setError("")
     try {
       const raffle = await api<Raffle>("/raffles", {
         method: "POST",
         body: JSON.stringify({
-          title: String(form.get("title")),
-          prize: String(form.get("prize")),
-          description: String(form.get("description") || "") || undefined,
-          ticketPrice: Number(form.get("ticketPrice")),
-          totalTickets: Number(form.get("totalTickets")),
+          title: String(form.get("title")).trim(),
+          prize: String(form.get("prize")).trim(),
+          description: String(form.get("description") || "").trim() || undefined,
+          ticketPrice,
+          totalTickets,
           status: String(form.get("status")),
-          drawAt: String(form.get("drawAt") || "") || undefined,
+          drawAt: drawAt ? drawAt.toISOString() : undefined,
         }),
       })
       router.push(`/admin/rifas/${raffle.id}`)
@@ -103,6 +119,7 @@ export default function RafflesPage() {
                 name="ticketPrice"
                 type="number"
                 min={1}
+                max={100000000}
                 step={1}
                 required
                 className="h-11 rounded-xl"
@@ -115,6 +132,8 @@ export default function RafflesPage() {
                 name="totalTickets"
                 type="number"
                 min={1}
+                max={5000}
+                step={1}
                 required
                 className="h-11 rounded-xl"
               />
