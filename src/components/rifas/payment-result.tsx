@@ -16,35 +16,71 @@ type Result = {
 
 const copy = {
   exito: {
-    title: "Pago recibido",
-    text: "Si el pago fue aprobado, tus números quedan reservados.",
+    title: "Estamos confirmando el pago",
+    text: "Si ya pagaste, tus números quedan a tu nombre en cuanto se confirme.",
   },
   fallo: {
     title: "Pago no realizado",
-    text: "Los números volvieron a estar disponibles.",
+    text: "No se descontó el dinero. Puedes volver a elegir tus números.",
   },
   pendiente: {
-    title: "Pago pendiente",
-    text: "El pago todavía se está confirmando. Tus números siguen reservados.",
+    title: "Pago en proceso",
+    text: "El banco todavía está confirmando. Tus números siguen apartados.",
   },
 } as const
+
+function clean(value: string | null) {
+  if (!value || value === "null" || value === "undefined") return ""
+  return value
+}
+
+function settled(status: string) {
+  if (status === "PAID") {
+    return {
+      title: "Pago listo",
+      text: "Listo. Tus números ya quedaron a tu nombre.",
+    }
+  }
+  if (status === "PENDING") {
+    return {
+      title: "Pago en proceso",
+      text: "Todavía se está confirmando. Los números siguen apartados para ti.",
+    }
+  }
+  if (status === "REFUNDED") {
+    return {
+      title: "Pago devuelto",
+      text: "El dinero se devolvió y los números volvieron a quedar libres.",
+    }
+  }
+  return {
+    title: "Pago no realizado",
+    text: "No se completó el pago. Los números volvieron a quedar libres.",
+  }
+}
 
 export function PaymentResult({ kind }: { kind: keyof typeof copy }) {
   const params = useSearchParams()
   const [result, setResult] = useState<Result | null>(null)
   const [error, setError] = useState("")
-  const info = copy[kind]
+  const info = result ? settled(result.status) : copy[kind]
 
   useEffect(() => {
-    const paymentId = params.get("payment_id") || params.get("collection_id")
-    if (!paymentId) return
+    const paymentId = clean(params.get("payment_id")) || clean(params.get("collection_id"))
+    const purchaseId = clean(params.get("external_reference"))
+    if (!paymentId && !purchaseId) {
+      setError("No encontramos el comprobante. Si alcanzaste a pagar, escríbenos con tu correo.")
+      return
+    }
     publicApi<Result>("/payments/confirm", {
       method: "POST",
-      body: JSON.stringify({ paymentId }),
+      body: JSON.stringify(paymentId ? { paymentId } : { purchaseId }),
     })
       .then((next) => {
         setResult(next)
-        if (next.status === "PAID" || next.status === "CANCELLED") clearCart()
+        if (next.status === "PAID" || next.status === "CANCELLED" || next.status === "REFUNDED" || next.status === "PENDING") {
+          clearCart()
+        }
       })
       .catch((err: Error) => setError(err.message))
   }, [params])

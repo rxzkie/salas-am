@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { readCart, writeCart } from "@/lib/cart"
+import { clearCart, readCart, writeCart } from "@/lib/cart"
 import { money } from "@/lib/raffle"
 import type { Board } from "@/lib/public-data"
 
@@ -15,16 +15,22 @@ export function NumberBoard({ board }: { board: Board }) {
   useEffect(() => {
     const cart = readCart()
     if (cart?.raffleId !== board.id) return
-    const taken = new Set(board.sold)
-    setPicked(cart.numbers.filter((number) => !taken.has(number)))
+    const next = [...new Set(cart.numbers.filter((number) => number >= 1 && number <= board.totalTickets))]
+    setPicked(next)
+    if (!next.length) clearCart()
   }, [board])
 
   function toggle(number: number) {
     if (board.status !== "ACTIVE") return
+    if (sold.has(number) && !picked.includes(number)) return
     const next = picked.includes(number)
       ? picked.filter((item) => item !== number)
-      : [...picked, number]
+      : [...new Set([...picked, number])]
     setPicked(next)
+    if (!next.length) {
+      clearCart()
+      return
+    }
     writeCart({
       raffleId: board.id,
       title: board.title,
@@ -73,7 +79,7 @@ export function NumberBoard({ board }: { board: Board }) {
             <button
               key={number}
               type="button"
-              disabled={taken || board.status !== "ACTIVE"}
+              disabled={(taken && !active) || board.status !== "ACTIVE"}
               onClick={() => toggle(number)}
               className={`h-12 rounded-xl text-sm font-semibold ${
                 taken

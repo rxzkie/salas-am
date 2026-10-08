@@ -7,7 +7,12 @@ export async function publicApi<T>(path: string, init: RequestInit = {}): Promis
   const payload = await response.json().catch(() => null)
   if (!response.ok) {
     const message = payload?.message
-    throw new Error(Array.isArray(message) ? message.join(", ") : message || "Error de servidor")
+    const text = Array.isArray(message)
+      ? message.join(", ")
+      : typeof message === "string"
+        ? message
+        : ""
+    throw new Error(text || "Error de servidor")
   }
   return payload as T
 }

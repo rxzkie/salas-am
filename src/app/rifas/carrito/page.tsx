@@ -5,6 +5,7 @@ import Link from "next/link"
 import { FormEvent, useEffect, useState } from "react"
 import { clearCart, readCart, writeCart, type Cart } from "@/lib/cart"
 import { publicApi } from "@/lib/public-api"
+import type { Board } from "@/lib/public-data"
 import { money } from "@/lib/raffle"
 
 type CheckoutResponse = {
@@ -20,8 +21,35 @@ export default function CarritoPage() {
   const [ready, setReady] = useState(false)
 
   useEffect(() => {
-    setCart(readCart())
+    const current = readCart()
+    setCart(current)
     setReady(true)
+    if (!current?.raffleId) return
+    let ignore = false
+    publicApi<Board>(`/raffles/${current.raffleId}/board`)
+      .then((board) => {
+        if (ignore) return
+        const price = Number(board.ticketPrice)
+        if (!Number.isFinite(price)) return
+        const next = readCart()
+        if (!next?.raffleId || !next.numbers.length) return
+        if (next.ticketPrice === price && next.title === board.title && next.prize === board.prize) return
+        const updated = { ...next, ticketPrice: price, title: board.title, prize: board.prize }
+        writeCart(updated)
+        setCart(updated)
+      })
+      .catch((err: unknown) => {
+        if (ignore) return
+        const message = err instanceof Error ? err.message : ""
+        if (/no encontrada|404/i.test(message)) {
+          clearCart()
+          setCart(null)
+          setError("Esta rifa ya no está disponible.")
+        }
+      })
+    return () => {
+      ignore = true
+    }
   }, [])
 
   function remove(number: number) {
@@ -38,8 +66,28 @@ export default function CarritoPage() {
 
   async function pay(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    if (!cart?.numbers.length) return
+    if (!cart?.numbers.length || !Number.isFinite(cart.ticketPrice) || cart.ticketPrice < 1) return
     const form = new FormData(event.currentTarget)
+    const name = String(form.get("name") ?? "").trim()
+    const email = String(form.get("email") ?? "").trim().toLowerCase()
+    const phone = String(form.get("phone") ?? "").trim()
+    const numbers = [...new Set(cart.numbers.filter((number) => Number.isInteger(number) && number > 0))]
+    if (name.length < 2) {
+      setError("Escribe tu nombre completo.")
+      return
+    }
+    if (!email.includes("@")) {
+      setError("Revisa el correo.")
+      return
+    }
+    if (phone.replace(/\D/g, "").length < 8) {
+      setError("Revisa el teléfono. Tiene que ser un número real.")
+      return
+    }
+    if (!numbers.length) {
+      setError("Elige al menos un número.")
+      return
+    }
     setLoading(true)
     setError("")
     try {
@@ -47,12 +95,8 @@ export default function CarritoPage() {
         method: "POST",
         body: JSON.stringify({
           raffleId: cart.raffleId,
-          numbers: cart.numbers,
-          buyer: {
-            name: String(form.get("name")),
-            email: String(form.get("email")),
-            phone: String(form.get("phone")),
-          },
+          numbers,
+          buyer: { name, email, phone },
         }),
       })
       const url =
@@ -62,7 +106,32 @@ export default function CarritoPage() {
       if (!url) throw new Error("No se pudo abrir el pago")
       window.location.href = url
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo pagar")
+      const message = err instanceof Error ? err.message : "No se pudo pagar"
+      setError(message)
+      if (/vendid|disponib|liber|activa|no está/i.test(message)) {
+        try {
+          const board = await publicApi<Board>(`/raffles/${cart.raffleId}/board`)
+          const taken = new Set(board.sold)
+          const kept = numbers.filter((number) => !taken.has(number))
+          if (!kept.length) {
+            clearCart()
+            setCart(null)
+          } else {
+            const next = {
+              ...cart,
+              title: board.title,
+              prize: board.prize,
+              ticketPrice: Number(board.ticketPrice),
+              numbers: kept,
+            }
+            writeCart(next)
+            setCart(next)
+          }
+        } catch {
+          clearCart()
+          setCart(null)
+        }
+      }
       setLoading(false)
     }
   }
@@ -79,7 +148,9 @@ export default function CarritoPage() {
     return (
       <main className="mx-auto w-full max-w-lg flex-1 px-4 py-10 sm:px-6">
         <h1 className="font-[family-name:var(--font-lora)] text-3xl text-[#c47a2c]">Carrito</h1>
-        <p className="mt-3 text-sm leading-relaxed text-[#3d4d6b]">Todavía no eliges números.</p>
+        <p className="mt-3 text-sm leading-relaxed text-[#3d4d6b]">
+          {error || "Todavía no eliges números."}
+        </p>
         <Link href="/rifas" className="mt-6 inline-flex h-12 items-center rounded-full bg-[#14233a] px-6 text-sm font-semibold text-white">
           Ver rifas
         </Link>

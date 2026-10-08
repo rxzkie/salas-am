@@ -29,5 +29,10 @@ export async function loadActiveRaffles() {
 }
 
 export async function loadBoard(id: string) {
-  return read<Board>(`/raffles/${id}/board`)
+  const response = await fetch(`${base}/raffles/${id}/board`, {
+    next: { revalidate: 15 },
+  })
+  if (response.status === 404) return null
+  if (!response.ok) throw new Error(`API ${response.status}`)
+  return (await response.json()) as Board
 }
