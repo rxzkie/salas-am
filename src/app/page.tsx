@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { Actividades } from "@/components/landing/actividades"
 import { Cierre } from "@/components/landing/cierre"
 import { Contacto } from "@/components/landing/contacto"
@@ -14,7 +15,9 @@ export default function Home() {
   return (
     <main className="flex-1">
       <Hero />
-      <RifaAnuncio />
+      <Suspense fallback={null}>
+        <RifaAnuncio />
+      </Suspense>
       <Marquee />
       <Mision />
       <Galeria />

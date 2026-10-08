@@ -17,7 +17,7 @@ type Result = {
 const copy = {
   exito: {
     title: "Pago recibido",
-    text: "Si Mercado Pago aprobó el cobro, tus números quedan reservados.",
+    text: "Si el pago fue aprobado, tus números quedan reservados.",
   },
   fallo: {
     title: "Pago no realizado",
@@ -25,7 +25,7 @@ const copy = {
   },
   pendiente: {
     title: "Pago pendiente",
-    text: "Mercado Pago todavía está confirmando. Tus números siguen reservados.",
+    text: "El pago todavía se está confirmando. Tus números siguen reservados.",
   },
 } as const
 
